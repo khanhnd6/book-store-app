@@ -1,0 +1,26 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+:root{
+  --grey: #DDDDE3;
+  --blue: #0A68FF;
+  --darkGrey: #808089;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+body{
+  background-color: #e7e7e7;
+}

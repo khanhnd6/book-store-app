@@ -1,0 +1,13 @@
+footer{
+    background-color: white;
+    padding: 30px 0;
+}
+
+footer .ft-col h3{
+    font-size: 13px;
+    padding: 10px 0;
+}
+
+footer .ft-col ul li a{
+    font-size: 11px;
+}

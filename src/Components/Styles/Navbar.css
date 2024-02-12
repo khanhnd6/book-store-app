@@ -1,0 +1,53 @@
+.search-btn{
+    color: var(--blue);
+    position: relative;
+}
+.search-btn:hover{
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.search-btn::after{
+    position: absolute;
+    content: "";
+    width: 1px;
+    background-color: var(--grey);
+    height: 60%;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+
+.user-menu {
+    justify-content: flex-end;
+}
+.user-menu li a{
+    padding: 0 16px;
+    transition: all 0.2s ease;    
+}
+
+.user-menu li a:hover{
+    color: var(--blue) !important;
+}
+
+.cart{
+    position: relative;
+}
+
+.cart::after{
+    position: absolute;
+    content: "";
+    width: 1px;
+    background-color: var(--grey);
+    height: 70%;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.cart > a {
+    color: var(--blue);
+}
