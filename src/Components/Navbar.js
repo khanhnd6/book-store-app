@@ -12,11 +12,11 @@ const SearchBar = ({keyword, setKeyword}) => {
         setKeyword(searchRef.current?.value)
     }
     return (
-        <div className="input-group px-2 d-flex"  style={{border: "1px solid var(--grey)", borderRadius: "8px"}}>
-            <div style={{height: "40px", width:  "40px", lineHeight: "40px", textAlign: "center"}}>
-                <FontAwesomeIcon size="lg" style={{color: "var(--darkGrey)"}} icon= {faMagnifyingGlass} />
+        <div className="search-bar input-group px-2 d-flex ">
+            <div style={{height: "30px", width:  "30px", lineHeight: "30px", textAlign: "center"}}>
+                <FontAwesomeIcon size="md" style={{color: "var(--darkGrey)"}} icon= {faMagnifyingGlass} />
             </div>
-            <div className="form-outline flex-grow-1">
+            <div className="form-outline flex-grow-1" style={{width: "0%"}}>
                 <input 
                     type="search" 
                     placeholder = "Freeship đến 30K" 
@@ -31,12 +31,12 @@ const SearchBar = ({keyword, setKeyword}) => {
 
 }
 
-const Navbar = ({keyword, setKeyword}) => {
+const Navbar = ({keyword, setKeyword, cart}) => {
     return (
-       <header className="bg-white">
+       <header className="header">
             <div className="container">
                 <ul className="d-flex align-items-center">
-                    <li><NavLink to="/" > <img alt = "logo" src= {logo} /> </NavLink></li>
+                    <li className="bg-white"><NavLink to="/" > <img style={{height: "50px"}} alt = "logo" src= {logo} /> </NavLink></li>
                     <li className="flex-grow-1 px-2 px-md-4">
                         <SearchBar keyword = {keyword} setKeyword = {setKeyword} />
                     </li>
@@ -44,7 +44,9 @@ const Navbar = ({keyword, setKeyword}) => {
                         <ul className="d-flex user-menu">
                             <li><NavLink to="/home" style={{color: "var(--darkGrey)"}} ><FontAwesomeIcon style={{paddingRight: "4px"}} icon={faHouse} />Trang chủ</NavLink></li>
                             <li><NavLink to="/account" style={{color: "var(--darkGrey)"}} ><FontAwesomeIcon style={{paddingRight: "4px"}} icon={faFaceSmileWink} />Tài khoản</NavLink></li>
-                            <li className="cart"><NavLink to="/cart" ><FontAwesomeIcon icon={faCartShopping} /></NavLink></li>
+                            <li className="cart">
+                                <NavLink style={{position: "relative"}} to="/cart" ><FontAwesomeIcon icon={faCartShopping} /> <span style={{position: "absolute", top: "-30%", right: "4%", display: "block", background: "red", color: "white", fontSize: "8px", width: "12px", height: "12px", textAlign: "center", borderRadius: "50%"}}>{cart.length}</span> </NavLink>
+                            </li>
                         </ul>
                     </li>
                 </ul>

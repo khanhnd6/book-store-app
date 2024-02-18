@@ -1,7 +1,6 @@
 .filter{
-    min-width: 200px;
+    width: 100%;
     background-color: white;
-    padding: 16px 20px;
     height: 100%;
 }
 
@@ -11,6 +10,11 @@
     padding: 3px 0;
 }
 
+.filter .filter-box ul .selected {
+    color: var(--blue);
+    text-decoration: underline;
+
+}
 .filter .filter-box ul li{
     padding: 3px 0;
     display: flex;
@@ -21,4 +25,20 @@
     margin-right: 6px;
     cursor: pointer;
 }
+
+.sidebar-container{
+    width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    .filter{    
+        min-width: 200px;
+        max-width: 200px;
+    }
+
+    .sidebar-container{
+        width: unset;
+    }
+}
+
 

@@ -1,6 +1,6 @@
 .product{
-    width: 200px;
-    height: 460px;
+    width: 96px;
+    height: 335px;
     position: relative;
     background-color: white;
     display: flex;
@@ -27,8 +27,8 @@
     width: 100%;
 }
 
-.product .details .name h4 {
-    font-size: 14px;
+.product .details .name a {
+    font-size: 10px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
@@ -37,7 +37,6 @@
     font-weight: 400;
     margin: 0px;
     word-break: break-word;
-
 }
 
 .product .details .price .price-text{
@@ -55,5 +54,17 @@
 
 .product .product-footer p {
     color: var(--darkGrey);
+    font-size: 10px;
 }
 
+@media screen and (min-width: 768px) {
+    .product{    
+        width: 195px;
+        height: 460px;
+    }
+
+    
+    .product .details .name a {
+        font-size: 14px;
+    }
+}

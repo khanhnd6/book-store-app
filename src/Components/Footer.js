@@ -7,7 +7,7 @@ import { faFacebook, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-i
 export default function Footer () {
     return (
         <footer>
-            <div className="container d-flex pb-3" style={{borderBottom: "1px solid var(--grey)"}}>
+            <div className="container d-flex flex-column flex-sm-row pb-3" style={{borderBottom: "1px solid var(--grey)"}}>
                 <div className="flex-grow-1 ft-col">
                     <h3>Hỗ trợ khách hàng</h3>
                     <ul>

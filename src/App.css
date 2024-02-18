@@ -1,0 +1,30 @@
+.rate span{
+    font-size: 9px;
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+.pagination li{
+    color: var(--darkGrey);
+    min-width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.pagination-item-active{
+    background-color: var(--blue);
+    color: white!important;
+}
+
+@media screen and (min-width: 768px) {
+    .rate span{
+        font-size: 12px;
+    }    
+}

@@ -1,51 +1,80 @@
 import { useEffect, useState } from "react";
 import ProductsGrid from "./ProductsGrid";
 import SideBar from "./SideBar";
+import ReactPaginate from "react-paginate";
 
-const Board = ({keyword, filter, setFilter}) => {
+
+const Board = ({keyword, allProducts, filter, setFilter}) => {
     const [products, setProducts] = useState([])
 
-    useEffect(()=> {
+    const filterHandler = (data) => {
         
-        const data = require("../data.json")
-        if(filter == null){
-            let categories = [], providers = []
+        data  = data.filter(item => item.name.replaceAll(" ", "").toLowerCase().includes(keyword.replaceAll(" ", "").toLowerCase()))
+        var selectedCategory = filter.categories.find(i => i.isSelected),
+        selectedSellers = filter.providers.filter(i => i.isSelected),
+        selectedRating = filter.rating;
 
-            data.forEach(item => {
-                var itemCategory = item.categories
-                var itemSeller = item.current_seller;
-        
-                if(categories.filter(i => i.id == itemCategory.id && i.name == itemCategory.name).length == 0){
-                    categories.push({id: itemCategory.id, name: itemCategory. name, isSelected: false})
-                }
-        
-                if(providers.filter(i => i.id == itemSeller.id && i.name == itemSeller.name).length == 0){
-                    providers.push({id: itemSeller.id, name: itemSeller.name, isSelected: false })
-                }
-            })
-    
-            setFilter({categories, providers, rating: null})
-            setProducts(data)
+
+        if(!!selectedCategory){
+            data = data.filter(i => i.categories.id == selectedCategory.id)
         }
 
-        //setProducts(data.filter(item => item.name.replaceAll(" ", "").toLowerCase().includes(keyword.replaceAll(" ", "").toLowerCase())))
-        
+        if(selectedSellers.length != 0){
+            selectedSellers = selectedSellers.map(i => i.id)
+            data = data.filter(i => selectedSellers.includes(i.current_seller.id))
+        }
 
-        
+        if(!!selectedRating){
+            data = data.filter(i => !!i.rating_average && i.rating_average >= selectedRating)
+        }
+
+        setProducts(data)
+    }
+
+
+    useEffect(()=> {        
+        if(allProducts.length != 0)
+            filterHandler(allProducts)
     }, [keyword, filter])
 
-    console.log(filter, keyword)
+
+    
+    const [itemOffset, setItemOffset] = useState(0);
+    const itemsPerPage = 12;
+    const endOffset = itemOffset + itemsPerPage;
+    
+    const currentItems = allProducts.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(allProducts.length / itemsPerPage);
+
+    const handlePageClick = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % allProducts.length;
+        setItemOffset(newOffset);
+    };
 
     return (
-        <div className="d-flex pb-5 gap-3">
-            <SideBar 
-                categories = {filter != null ? filter.categories : null} 
-                providers = {filter != null ? filter.providers : null} 
-                filter = {filter} 
-                setFilter = {setFilter}
-                />
-            <ProductsGrid products = {products} />
-        </div>
+        <>
+            <div className="d-flex flex-column flex-md-row align-items-start pb-5 gap-3">
+                <SideBar 
+                    categories = {filter != null ? filter.categories : null} 
+                    providers = {filter != null ? filter.providers : null} 
+                    filter = {filter} 
+                    setFilter = {setFilter}
+                    />
+                <ProductsGrid products = {currentItems} />
+            </div>
+
+            <ReactPaginate
+                className="py-5 pagination"
+                breakLabel="..."
+                activeClassName="pagination-item-active"
+                nextLabel={null}
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={pageCount}
+                previousLabel={null}
+                renderOnZeroPageCount={null}
+            />
+        </>
     )
 }
 
