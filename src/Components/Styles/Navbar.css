@@ -36,12 +36,8 @@
 .user-menu li:nth-last-child(1) a {
     color: white;
 }
-.user-menu li a:hover{
-    color: var(--blue) !important;
-}
 
-
-.user-menu .cart a:hover{
+.user-menu .cart a{
     color: white!important;
 }
 
@@ -86,5 +82,10 @@
     .search-bar {
         border: 1px solid var(--grey);
         border-radius: 8px;
+    }
+
+    
+    .user-menu .cart a{
+        color: var(--blue)!important;
     }
 }

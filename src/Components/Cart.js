@@ -4,15 +4,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons"
 import "./Styles/Cart.css"
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons"
+import { useParams } from "react-router-dom"
 
 function CartItems({cart, setCart, allProducts}) {
     const [cartItems, setCartItems] = useState([])
     
+    let {productId} = useParams()
+
+    
     useEffect(()=> {
-        if(cart.length != 0)
-            setCartItems(
-                cart.map( (i) => ({details: allProducts.find( prod => prod.id == i.id), quantity: i.quantity, isChecked : false }))
-            )
+        if(cart.length != 0){
+
+            if(cartItems.length != 0){
+
+                setCartItems(
+                    cart.map( (i) => ({details: allProducts.find( prod => prod.id == i.id), quantity: i.quantity, isChecked : !!productId && i.id==productId }))
+                )
+            } else {
+                setCartItems(
+                    cart.map( (i) => ({details: allProducts.find( prod => prod.id == i.id), quantity: i.quantity, isChecked : !!productId && i.id==productId }))
+                )
+
+            }
+
+        }
     }, [allProducts, cart])
 
 
@@ -88,6 +103,8 @@ function CartItems({cart, setCart, allProducts}) {
     }
 
 
+    console.log(cartItems)
+
     return (
 
         <>
@@ -133,13 +150,13 @@ function CartItems({cart, setCart, allProducts}) {
                                     </div>
 
                                     <div className="d-flex flex-column flex-md-row algin-items-center justify-content-between pe-2 w-100">
-                                        <div style={{width: "200px"}}>
+                                        <div style={{maxWidth: "200px"}}>
                                             <p>{item.details?.name}</p>
                                         </div>
 
                                         <div style={{fontWeight: "bold", fontSize: "15px"}}>{item.details?.list_price.toLocaleString()}<sup>&#273;</sup></div>
 
-                                        <div className="quantity-btns">
+                                        <div className="my-2 quantity-btns">
                                             <div className={(item.quantity != 1 ? "btn quantity-btn " : "btn quantity-btn quantity-btn-disable")} onClick={(e)=> decreaseQuantity(item.details.id)}><FontAwesomeIcon icon={faMinus}/></div>
                                             <div className="btn quantity ">
                                                 <input 
@@ -171,7 +188,16 @@ function CartItems({cart, setCart, allProducts}) {
 
                 <div className="d-flex flex-row justify-content-between bg-white px-3 py-5">
                     <span style={{fontWeight: "bold", fontSize: "16px"}}>Tổng</span>
-                    <span style={{fontWeight: "bold", fontSize: "16px", color: "red"}}>{cartItems.reduce((total, curr) => { return total += curr.details?.list_price * curr.quantity }, 0).toLocaleString()}<sup>&#273;</sup></span>
+                    <span style={{fontWeight: "bold", fontSize: "16px", color: "red"}}>
+                        {
+                            cartItems.reduce((total, curr) => { 
+                                console.log(curr)
+                                return total += (curr.isChecked ? curr.details?.list_price * curr.quantity : 0) 
+                            }, 0).toLocaleString()
+                        }
+                        
+                        <sup>&#273;</sup>
+                    </span>
                 </div>
             </div>
         </>

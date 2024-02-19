@@ -70,7 +70,10 @@ function App() {
           <Route path="details" >
             <Route path=':productId' element={<Details cart={cart} setCart = {setCart} />}  />
           </Route>
-          <Route path='/cart' element={<Cart cart = {cart} setCart={setCart} allProducts = {allProducts} />} />
+          <Route path='/cart'>
+            <Route path='' element={<Cart cart = {cart} setCart={setCart} allProducts = {allProducts} />} />
+            <Route path=':productId' element={<Cart cart = {cart} setCart={setCart} allProducts = {allProducts} />} />
+          </Route>
         </Routes>
       </div>
     </Layout>

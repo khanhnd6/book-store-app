@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react"
-import { json, useParams } from "react-router-dom"
+import { forwardRef, useEffect, useRef, useState } from "react"
+import { Link, json, useParams } from "react-router-dom"
 import { getData, APIUrl, scrollTop } from "../constants"
 import Rate from "./Rate"
 import "./Styles/Details.css"
+import "react-toastify/dist/ReactToastify.css";
 
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Bounce, ToastContainer, toast } from "react-toastify"
 
 
 const Images = ({imgUrls}) => {
@@ -32,7 +34,8 @@ const Images = ({imgUrls}) => {
     )
 }
 
-const DetailSideBar = ({details}) => {
+const DetailSideBar = function({details}) {
+
     return (
         <div className="col-12 col-sm-3 bg-white p-2 h-100  mb-3 mb-sm-0">
             <Images imgUrls = {details.images} />
@@ -95,6 +98,7 @@ const DetailsContent = ({details}) => {
     )
 }
 
+
 const DetailsCheckout = ({details, setCart, cart}) => {
 
     const minusHanler = () => {
@@ -113,11 +117,36 @@ const DetailsCheckout = ({details, setCart, cart}) => {
         } else {
             setCart([...cart, {id: details.id, quantity, modifyTime: new Date().getTime()}])
         }
-        console.log(cart)
+        toast.success(`Đã thêm vào giỏ hàng`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+            });
     }   
 
     return (
+        <>
+        
         <div className="col-12 col-sm-3 py-4 px-2 bg-white h-100">
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition= {Bounce}
+            />
             <div className="pb-2">
                 <h6>Số lượng</h6>
                 <div className="interactive-btns pb-3">
@@ -147,11 +176,12 @@ const DetailsCheckout = ({details, setCart, cart}) => {
                 <p style={{fontSize: '20px', fontWeight: "600"}}>{details.list_price?.toLocaleString()}<sup>đ</sup></p>
             </div> 
             <div className="d-flex buying-btns flex-column">
-                <div className="btn btn-red">Mua ngay</div>
+                <Link className="btn btn-red" onClick={addToCart} to={`/cart/${details.id}`} >Mua ngay</Link>
                 <div className="btn" onClick={addToCart}>Thêm vào giỏ</div>
                 <div className="btn">Mua trước trả sau</div>
             </div>
         </div>
+        </>
     )
 }
 
@@ -159,9 +189,11 @@ const Details = (props) => {
 
     let {productId} = useParams()
 
+
     const [details, setDetails] = useState({})
 
     useEffect(()=> {
+
         getData(APIUrl + "/" + productId)
             .then(res=> {
                 setDetails(res)
@@ -170,7 +202,6 @@ const Details = (props) => {
             .catch(err => console.log(err))
     }, [])
 
-    console.log(details)
     return (
         <div className="row mt-2 mb-3">
            <DetailSideBar details={details} />
