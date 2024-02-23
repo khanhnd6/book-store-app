@@ -28,6 +28,8 @@ const Board = ({keyword, allProducts, filter, setFilter}) => {
             data = data.filter(i => !!i.rating_average && i.rating_average >= selectedRating)
         }
 
+        console.log('data: ', data)
+
         setProducts(data)
     }
 
@@ -43,13 +45,16 @@ const Board = ({keyword, allProducts, filter, setFilter}) => {
     const itemsPerPage = 12;
     const endOffset = itemOffset + itemsPerPage;
     
-    const currentItems = allProducts.slice(itemOffset, endOffset);
-    const pageCount = Math.ceil(allProducts.length / itemsPerPage);
+    const currentItems = products.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(products.length / itemsPerPage);
 
     const handlePageClick = (event) => {
-        const newOffset = (event.selected * itemsPerPage) % allProducts.length;
+        const newOffset = (event.selected * itemsPerPage) % products.length;
         setItemOffset(newOffset);
     };
+
+
+    console.log(filter)
 
     return (
         <>
